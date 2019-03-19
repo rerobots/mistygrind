@@ -51,6 +51,6 @@ setup(name='mistygrind',
                    'Programming Language :: Python :: 3.6',
                    'Programming Language :: Python :: 3.7'],
       packages=['mistygrind'],
-      install_requires=['requests'],
+      install_requires=[],
       entry_points={'console_scripts': ['mistygrind = mistygrind.cli:main']}
       )
