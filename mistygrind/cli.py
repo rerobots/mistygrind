@@ -8,7 +8,11 @@ Copyright (c) 2019 rerobots, Inc.
 from __future__ import absolute_import
 from __future__ import print_function
 import argparse
+import glob
+import json
+import os.path
 import sys
+import zipfile
 
 from .__init__ import __version__
 
@@ -18,6 +22,8 @@ def main(argv=None):
         argv = sys.argv[1:]
 
     argparser = argparse.ArgumentParser(description='a tool for static analysis of Misty skills and offboard Misty REST API clients')
+    argparser.add_argument('FILE', nargs='*', default=None,
+                           help='zip files or skill meta files')
     argparser.add_argument('-V', '--version', dest='print_version',
                            action='store_true', default=False,
                            help='print version number and exit.')
@@ -25,6 +31,36 @@ def main(argv=None):
     if args.print_version:
         print(__version__)
         return 0
+
+    if args.FILE is None:
+        files = glob.glob('*.zip')
+        files += glob.glob('*.ZIP')
+    else:
+        files = args.FILE
+
+    for name in files:
+        skillname = os.path.basename(name)
+        if skillname.endswith('.json') or skillname.endswith('.JSON'):
+            skillname = skillname[:-len('.json')]
+        elif skillname.endswith('.zip') or skillname.endswith('.ZIP'):
+            skillname = skillname[:-len('.zip')]
+        else:
+            print('ERROR: failed to extract skill name from {}'.format(name))
+            return 1
+        print('skill: {}'.format(skillname))
+
+        try:
+            fp = zipfile.ZipFile(name)
+            skillmeta = json.load(fp.open('{}.json'.format(skillname)))
+        except zipfile.BadZipFile:
+            try:
+                skillmeta = json.load(open(name, 'rt'))
+            except:
+                print('failed to open {}'.format(name))
+                return 1
+
+        assert 'Name' in skillmeta, 'meta file is missing name field'
+        assert skillmeta['Name'] == skillname, 'unexpected name in meta file'
 
     return 0
 
