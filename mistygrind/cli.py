@@ -59,6 +59,7 @@ def main(argv=None):
                 print('failed to open {}'.format(name))
                 return 1
 
+        print('comparing `Name` field in meta file with file names...')
         assert 'Name' in skillmeta, 'meta file is missing name field'
         assert skillmeta['Name'] == skillname, 'unexpected name in meta file'
 
