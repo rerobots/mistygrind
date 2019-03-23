@@ -32,7 +32,7 @@ def main(argv=None):
         print(__version__)
         return 0
 
-    if args.FILE is None:
+    if not args.FILE:
         files = glob.glob('*.zip')
         files += glob.glob('*.ZIP')
     else:
