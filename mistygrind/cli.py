@@ -74,6 +74,13 @@ def main(argv=None):
                 print('ERROR: no meta file found')
                 return 1
 
+        jsfilepath = os.path.join(parentpath, '{}.js'.format(skillname))
+        if not os.path.exists(jsfilepath):
+            jsfilepath = os.path.join(parentpath, '{}.JS'.format(skillname))
+            if not os.path.exists(jsfilepath):
+                print('ERROR: no JS file found')
+                return 1
+
         with open(metafilepath, 'rt') as fp:
             skillmeta = json.load(fp)
 
