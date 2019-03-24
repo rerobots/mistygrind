@@ -82,7 +82,11 @@ def main(argv=None):
                 return 1
 
         with open(metafilepath, 'rt') as fp:
-            skillmeta = json.load(fp)
+            try:
+                skillmeta = json.load(fp)
+            except ValueError:
+                print('ERROR: meta file does not contain valid JSON')
+                return 1
 
         print('comparing `Name` field in meta file with file names...')
         assert 'Name' in skillmeta, 'meta file is missing name field'
@@ -95,6 +99,7 @@ def main(argv=None):
         except ValueError:
             print('ERROR: not well-formed GUID: {}'.format(skillmeta['UniqueId']))
             return 1
+
 
     return 0
 
