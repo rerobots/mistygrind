@@ -89,11 +89,17 @@ def main(argv=None):
                 return 1
 
         print('comparing `Name` field in meta file with file names...')
-        assert 'Name' in skillmeta, 'meta file is missing name field'
-        assert skillmeta['Name'] == skillname, 'unexpected name in meta file'
+        if 'Name' not in skillmeta:
+            print('ERROR: meta file is missing name field')
+            return 1
+        if skillmeta['Name'] != skillname:
+            print('ERROR: unexpected name in meta file')
+            return 1
 
         print('checking that GUID is well-formed...')
-        assert 'UniqueId' in skillmeta, 'meta file is missing GUID field'
+        if 'UniqueId' not in skillmeta:
+            print('ERROR: meta file is missing GUID field')
+            return 1
         try:
             uuid.UUID(skillmeta['UniqueId'])
         except ValueError:
