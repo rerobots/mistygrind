@@ -7,6 +7,28 @@ Abstract
 a tool for static analysis of Misty skills and offboard Misty REST API clients
 
 
+Getting started
+---------------
+
+Install this Python package::
+
+  pip install mistygrind
+
+Try to get the version from the command-line::
+
+  mistygrind -V
+
+which should cause a string like "0.1.0" to be printed.
+Check for dependencies::
+
+  mistygrind --check-deps
+
+which will decide if dependencies are satisfied, and if not, give hints.
+Dependencies include:
+
+* `ESLint <https://eslint.org/>`_
+
+
 Participating
 -------------
 
