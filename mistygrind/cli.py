@@ -11,6 +11,7 @@ import argparse
 import glob
 import json
 import os.path
+import subprocess
 import sys
 import tempfile
 import uuid
@@ -108,6 +109,9 @@ def main(argv=None):
             print('ERROR: not well-formed GUID: {}'.format(skillmeta['UniqueId']))
             return 1
 
+        print('checking syntax of main JS file...')
+        args = ['eslint', '--no-eslintrc', jsfilepath]
+        subprocess.check_call(args)
 
     return 0
 
