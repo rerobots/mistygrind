@@ -40,7 +40,9 @@ def main(argv=None):
     else:
         files = args.FILE
 
-    for name in files:
+    for ii, name in enumerate(files):
+        if ii > 0:
+            print('----')
         original_dirname = os.path.dirname(name)
         skillname = os.path.basename(name)
         if skillname.endswith('.json') or skillname.endswith('.JSON'):
