@@ -30,9 +30,27 @@ def main(argv=None):
     argparser.add_argument('-V', '--version', dest='print_version',
                            action='store_true', default=False,
                            help='print version number and exit.')
+    argparser.add_argument('--check-deps', dest='check_dependencies',
+                           action='store_true', default=False,
+                           help='check for dependencies, like ESLint.')
     args = argparser.parse_args(argv)
     if args.print_version:
         print(__version__)
+        return 0
+
+    if args.check_dependencies:
+        args = ['eslint', '--version']
+        try:
+            rc = subprocess.call(args, stdout=subprocess.PIPE)
+        except OSError:
+            print('ESLint not found. Try to install it as instructed at\n'
+                  'https://eslint.org/docs/user-guide/getting-started')
+            return 1
+        if rc != 0:
+            print('ESLint does not appear to be correctly installed. '
+                  'Compare with instructions at\n'
+                  'https://eslint.org/docs/user-guide/getting-started')
+            return 1
         return 0
 
     if not args.FILE:
