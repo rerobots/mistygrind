@@ -45,6 +45,8 @@ def main(argv=None):
         except OSError:
             print('ESLint not found. Try to install it as instructed at\n'
                   'https://eslint.org/docs/user-guide/getting-started')
+            print('It might suffice to use Yarn (https://yarnpkg.com/en/):\n\n'
+                  '    yarn global add eslint\n')
             return 1
         if rc != 0:
             print('ESLint does not appear to be correctly installed. '
