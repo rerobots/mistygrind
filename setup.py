@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os.path
 from setuptools import setup
 
 
@@ -51,6 +52,9 @@ setup(name='mistygrind',
                    'Programming Language :: Python :: 3.6',
                    'Programming Language :: Python :: 3.7'],
       packages=['mistygrind'],
+      package_data = {
+          'mistygrind': [os.path.join('eslint_rules', '*.js')],
+      },
       install_requires=[],
       entry_points={'console_scripts': ['mistygrind = mistygrind.cli:main']}
       )

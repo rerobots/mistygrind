@@ -130,7 +130,12 @@ def main(argv=None):
             return 1
 
         print('checking syntax of main JS file...')
-        args = ['eslint', '--no-eslintrc', jsfilepath]
+        eslint_rulespath = os.path.join(os.path.dirname(__file__), 'eslint_rules')
+        args = ['eslint',
+                '--no-eslintrc',
+                '--rulesdir', eslint_rulespath,
+                '--rule', 'mistyobj-prop: 2',
+                jsfilepath]
         subprocess.check_call(args)
 
     return 0
