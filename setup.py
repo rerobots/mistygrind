@@ -55,6 +55,6 @@ setup(name='mistygrind',
       package_data = {
           'mistygrind': [os.path.join('eslint_rules', '*.js')],
       },
-      install_requires=[],
+      install_requires=['responses'],
       entry_points={'console_scripts': ['mistygrind = mistygrind.cli:main']}
       )
