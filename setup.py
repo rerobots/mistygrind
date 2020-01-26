@@ -46,7 +46,6 @@ setup(name='mistygrind',
       classifiers=['License :: OSI Approved :: Apache Software License',
                    'Development Status :: 4 - Beta',
                    'Programming Language :: Python :: 3',
-                   'Programming Language :: Python :: 3.4',
                    'Programming Language :: Python :: 3.5',
                    'Programming Language :: Python :: 3.6',
                    'Programming Language :: Python :: 3.7'],
@@ -54,6 +53,6 @@ setup(name='mistygrind',
       package_data = {
           'mistygrind': [os.path.join('eslint_rules', '*.js')],
       },
-      install_requires=['responses'],
+      install_requires=['responses', 'aiohttp'],
       entry_points={'console_scripts': ['mistygrind = mistygrind.cli:main']}
       )

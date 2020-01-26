@@ -18,6 +18,7 @@ import uuid
 import zipfile
 
 from .__init__ import __version__
+from .vm import start_vm
 
 
 def main(argv=None):
@@ -33,10 +34,16 @@ def main(argv=None):
     argparser.add_argument('--check-deps', dest='check_dependencies',
                            action='store_true', default=False,
                            help='check for dependencies, like ESLint.')
+    argparser.add_argument('--vm', dest='run_vm',
+                           action='store_true', default=False,
+                           help='start Misty mock REST API server')
     args = argparser.parse_args(argv)
     if args.print_version:
         print(__version__)
         return 0
+
+    if args.run_vm:
+        return start_vm()
 
     if args.check_dependencies:
         args = ['eslint', '--version']
