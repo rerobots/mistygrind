@@ -40,7 +40,7 @@ async def battery(request):
     """
     return web.json_response({
         'status': 'Success',
-        'result': generate_battery_level(),
+        'result': generate_batterylevel(),
     })
 
 
