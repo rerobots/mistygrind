@@ -29,6 +29,16 @@ Dependencies include:
 * `ESLint <https://eslint.org/>`_
 
 
+Use as a Misty virtual machine
+------------------------------
+
+Try ::
+
+  mistygrind --vm
+
+which will start listening on 127.0.0.1 (localhost) at port 8888.
+
+
 Testing and development
 -----------------------
 
