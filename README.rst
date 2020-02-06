@@ -29,6 +29,14 @@ Dependencies include:
 * `ESLint <https://eslint.org/>`_
 
 
+Testing and development
+-----------------------
+
+All tests are in the directory ``tests/``.
+Recent results on `Travis CI <https://travis-ci.org/>`_ are available at
+https://travis-ci.org/rerobots/mistygrind
+
+
 Participating
 -------------
 
