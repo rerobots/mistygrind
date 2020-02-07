@@ -37,13 +37,18 @@ def main(argv=None):
     argparser.add_argument('--vm', dest='run_vm',
                            action='store_true', default=False,
                            help='start Misty mock REST API server')
+    argparser.add_argument('--vm-port', dest='vm_port', default=8888,
+                           help='if --vm, port on which to listen; default is 8888')
+    argparser.add_argument('--vm-addr', dest='vm_addr', default='127.0.0.1',
+                           help=('if --vm, address on which to listen; default is 127.0.0.1, '
+                                 'also known as localhost'))
     args = argparser.parse_args(argv)
     if args.print_version:
         print(__version__)
         return 0
 
     if args.run_vm:
-        return start_vm()
+        return start_vm(addr=args.vm_addr, port=args.vm_port)
 
     if args.check_dependencies:
         args = ['eslint', '--version']
