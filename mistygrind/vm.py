@@ -131,11 +131,9 @@ async def default_route(request):
     return web.json_response(status=404)
 
 
-def start_vm(addr=None, port=None):
+def start_vm(addr=None, port=8888):
     if addr is None:
         addr = '127.0.0.1'
-    if port is None:
-        port = 8888
     app = web.Application(middlewares=[cors_handler])
     app.router.add_get(r'/api/device', device)
     app.router.add_get(r'/api/battery', battery)
