@@ -42,13 +42,16 @@ def main(argv=None):
     argparser.add_argument('--vm-addr', dest='vm_addr', default='127.0.0.1',
                            help=('if --vm, address on which to listen; default is 127.0.0.1, '
                                  'also known as localhost'))
+    argparser.add_argument('--vm-trace', dest='trace_vm',
+                           action='store_true', default=False,
+                           help='echo any requests of unknown method, path to stdout.')
     args = argparser.parse_args(argv)
     if args.print_version:
         print(__version__)
         return 0
 
     if args.run_vm:
-        return start_vm(addr=args.vm_addr, port=args.vm_port)
+        return start_vm(addr=args.vm_addr, port=args.vm_port, trace_unknown=args.trace_vm)
 
     if args.check_dependencies:
         args = ['eslint', '--version']

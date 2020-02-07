@@ -131,7 +131,13 @@ async def default_route(request):
     return web.json_response(status=404)
 
 
-def start_vm(addr=None, port=8888):
+def start_vm(addr=None, port=8888, trace_unknown=False):
+    """Start VM
+
+    addr: IP address to bind for listening; default is 127.0.0.1 (localhost).
+    port: port number to bind
+    trace_unknown: echo any requests of unknown method, path to stdout.
+    """
     if addr is None:
         addr = '127.0.0.1'
     app = web.Application(middlewares=[cors_handler])
@@ -141,5 +147,7 @@ def start_vm(addr=None, port=8888):
     app.router.add_get(r'/api/audio/list', get_audio_list)
     app.router.add_get(r'/api/images/list', get_images_list)
     app.router.add_get(r'/pubsub', pubsub)
+    if trace_unknown:
+        app.router.add_route('*', '/{path:.*}', default_route)
     web.run_app(app, host=addr, port=port)
     return 0
