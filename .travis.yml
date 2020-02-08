@@ -14,6 +14,7 @@ install: pipenv install --skip-lock --dev .
 
 script:
   - pylint -E mistygrind
+  - cd tests && pytest -v
 
 notifications:
   email:
