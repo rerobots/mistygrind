@@ -76,6 +76,10 @@ def main(argv=None):
     else:
         files = args.FILE
 
+    if len(files) == 0:
+        print('No files given. Try `-h` to get a usage summary.')
+        return 1
+
     for ii, name in enumerate(files):
         if ii > 0:
             print('----')
