@@ -146,6 +146,15 @@ async def generic_options(request):
 
 async def default_route(request):
     print('{} {}'.format(request.method, request.path))
+    qpairs = list(request.query.items())
+    if qpairs:
+        print('query pairs:', qpairs)
+    if request.has_body:
+        given = str(await request.read(), encoding='utf-8')
+    else:
+        given = ''
+    if given:
+        print('body:', given)
     return web.json_response(status=404)
 
 
