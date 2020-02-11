@@ -132,6 +132,9 @@ async def pubsub(request):
     async for msg in ws:
         if msg.type == aiohttp.WSMsgType.CLOSED or msg.type == aiohttp.WSMsgType.ERROR:
             break
+        else:
+            if request.app['trace_unknown']:
+                print('WebSocket rx:', msg.data)
     return ws
 
 
@@ -175,6 +178,7 @@ def start_vm(addr=None, port=8888, trace_unknown=False):
     app.router.add_get(r'/api/images/list', get_images_list)
     app.router.add_get(r'/pubsub', pubsub)
     app.router.add_route('OPTIONS', r'/{path:.*}', generic_options)
+    app['trace_unknown'] = trace_unknown
     if trace_unknown:
         app.router.add_route('*', '/{path:.*}', default_route)
     web.run_app(app, host=addr, port=port)
