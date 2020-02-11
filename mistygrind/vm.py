@@ -126,6 +126,15 @@ async def pubsub(request):
     return ws
 
 
+async def generic_options(request):
+    headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'DELETE,GET,OPTIONS,POST,PUT',
+        'Access-Control-Allow-Headers': 'Content-Type,Accept,Access-Control-Allow-Origin',
+    }
+    return web.json_response(headers=headers, status=200)
+
+
 async def default_route(request):
     print('{} {}'.format(request.method, request.path))
     return web.json_response(status=404)
@@ -147,6 +156,7 @@ def start_vm(addr=None, port=8888, trace_unknown=False):
     app.router.add_get(r'/api/audio/list', get_audio_list)
     app.router.add_get(r'/api/images/list', get_images_list)
     app.router.add_get(r'/pubsub', pubsub)
+    app.router.add_route('OPTIONS', r'/{path:.*}', generic_options)
     if trace_unknown:
         app.router.add_route('*', '/{path:.*}', default_route)
     web.run_app(app, host=addr, port=port)
