@@ -15,6 +15,15 @@ async def cors_handler(request, handler):
     return response
 
 
+@web.middleware
+async def mistyversion_header(request, handler):
+    """Add Misty-Command-Version header
+    """
+    response = await handler(request)
+    response.headers['Misty-Command-Version'] = 'Current'
+    return response
+
+
 def generate_batterylevel():
     """Simulate battery level data
 
@@ -149,7 +158,7 @@ def start_vm(addr=None, port=8888, trace_unknown=False):
     """
     if addr is None:
         addr = '127.0.0.1'
-    app = web.Application(middlewares=[cors_handler])
+    app = web.Application(middlewares=[cors_handler, mistyversion_header])
     app.router.add_get(r'/api/device', device)
     app.router.add_get(r'/api/battery', battery)
     app.router.add_get(r'/api/system/updates', get_system_updates)
