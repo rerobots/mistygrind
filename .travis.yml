@@ -14,7 +14,7 @@ install: pipenv install --skip-lock --dev .
 
 script:
   - pylint -E mistygrind
-  - cd tests && pytest -v
+  - cd tests && pytest -v --aiohttp-enable-loop-debug --aiohttp-loop=pyloop
 
 notifications:
   email:
