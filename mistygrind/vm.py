@@ -161,15 +161,9 @@ async def default_route(request):
     return web.json_response(status=404)
 
 
-def start_vm(addr=None, port=8888, trace_unknown=False):
-    """Start VM
-
-    addr: IP address to bind for listening; default is 127.0.0.1 (localhost).
-    port: port number to bind
-    trace_unknown: echo any requests of unknown method, path to stdout.
+def create_vm(trace_unknown=False):
+    """Create Misty VM as aiohttp app.
     """
-    if addr is None:
-        addr = '127.0.0.1'
     app = web.Application(middlewares=[cors_handler, mistyversion_header])
     app.router.add_get(r'/api/device', device)
     app.router.add_get(r'/api/battery', battery)
@@ -181,5 +175,17 @@ def start_vm(addr=None, port=8888, trace_unknown=False):
     app['trace_unknown'] = trace_unknown
     if trace_unknown:
         app.router.add_route('*', '/{path:.*}', default_route)
-    web.run_app(app, host=addr, port=port)
+    return app
+
+
+def start_vm(addr=None, port=8888, trace_unknown=False):
+    """Start VM
+
+    addr: IP address to bind for listening; default is 127.0.0.1 (localhost).
+    port: port number to bind
+    trace_unknown: echo any requests of unknown method, path to stdout.
+    """
+    if addr is None:
+        addr = '127.0.0.1'
+    web.run_app(create_vm(trace_unknown=trace_unknown), host=addr, port=port)
     return 0
