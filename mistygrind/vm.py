@@ -148,12 +148,17 @@ async def generic_options(request):
 
 
 async def default_route(request):
+    print('headers: {}'.format([(k,v) for k,v in request.headers.items()]))
     print('{} {}'.format(request.method, request.path))
     qpairs = list(request.query.items())
     if qpairs:
         print('query pairs:', qpairs)
     if request.has_body:
-        given = str(await request.read(), encoding='utf-8')
+        bd = await request.read()
+        try:
+            given = str(bd, encoding='utf-8')
+        except UnicodeDecodeError:
+            given = bd
     else:
         given = ''
     if given:
